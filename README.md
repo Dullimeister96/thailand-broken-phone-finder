@@ -29,9 +29,9 @@ From this directory, run `python3 -m http.server 8080` (Windows: `py -m http.ser
 - `updatedAt`: ISO 8601 timestamp with a timezone for the entire snapshot.
 - `listings`: array of listing objects.
 
-Each listing requires a stable unique `id`, `title`, `brand`, `model`, numeric nonnegative `price`, `currency: "THB"`, `condition`, `description`, `location`, `source`, ISO 8601 `discoveredAt` and `lastCheckedAt`, boolean `isNew`, and `status` (`active`, `sold`, or `removed`). Supported brands and condition keys are defined in `js/data.js`. All eight requested condition types are included. Display labels are Thai.
+Each listing requires a stable unique `id`, `title`, `brand`, `model`, nonnegative numeric `price` (or `null` when unknown), `currency: "THB"`, `condition`, `description`, `location`, `source`, ISO 8601 `discoveredAt` and `lastCheckedAt`, boolean `isNew`, and `status` (`active`, `sold`, or `removed`). Supported brands and condition keys are defined in `js/data.js`.
 
-Optional display fields: `url`, `image`, `imageIsPlaceholder`, `seller`, `fullDescription`, `defect`, `notes`, and ISO 8601 `publishedAt`. Image paths are relative to the page, for example `./assets/placeholder.svg`. Links accept HTTP(S), and images accept same-origin HTTP(S) or remote HTTPS. Dynamic strings are rendered with `textContent`, never inserted as HTML. Failed images use a local fallback.
+Optional display fields: `url`, `sourceImage`, `image`, `imageIsPlaceholder`, `seller`, `fullDescription`, `defect`, `notes`, and ISO 8601 `publishedAt`. `sourceImage` should contain a direct HTTPS image URL supplied by the listing source and is preferred over `image`. Image paths may be relative to the page, for example `./assets/placeholder.svg`. Failed or unavailable source images use the local placeholder. Dynamic strings are rendered with `textContent`, never inserted as HTML.
 
 Refresh fetches the JSON with `cache: "no-store"`. Invalid snapshots and network failures leave the last successfully loaded data visible and show a retry message. Filters combine with AND; text search covers model, description, defect, location and source. Brand controls available models. Statistics describe active records in the full snapshot; result count describes the filtered records. Sold/removed records are not displayed.
 

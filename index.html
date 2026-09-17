@@ -10,40 +10,40 @@
   <script type="module" src="./js/app.js"></script>
 </head>
 <body>
-  <a class="skip-link" href="#results">ข้ามไปยังรายการ</a>
-  <header class="topbar"><div class="brandmark" aria-hidden="true">TF<span>↗</span></div><div class="identity"><h1>Alex &amp; Vitida Broken Phone Finder</h1><p>ค้นหาเครื่องที่ใช่ เพื่อโอกาสครั้งใหม่</p></div></header>
+  <a class="skip-link" href="#results" data-i18n="skip">ข้ามไปยังรายการ</a>
+  <header class="topbar"><div class="brandmark" aria-hidden="true">TF<span>↗</span></div><div class="identity"><h1>Alex &amp; Vitida Broken Phone Finder</h1><p data-i18n="tagline">ค้นหาเครื่องที่ใช่ เพื่อโอกาสครั้งใหม่</p></div><label class="language-picker"><span data-i18n="language">ภาษา</span><select id="language"><option value="th">ไทย</option><option value="en">English</option><option value="de">Deutsch</option></select></label></header>
   <main>
-    <div class="page-heading"><div><p class="eyebrow">ภาพรวมตลาดโทรศัพท์</p><h2>ค้นหาโทรศัพท์</h2><p class="muted">เครื่องมือสอง เครื่องเสีย และอะไหล่จากทั่วประเทศไทย</p></div><button id="refresh" class="primary" type="button"><span aria-hidden="true">↻</span> รีเฟรชข้อมูล</button></div>
+    <div class="page-heading"><div><p class="eyebrow" data-i18n="eyebrow">ภาพรวมตลาดโทรศัพท์</p><h2 data-i18n="heading">ค้นหาโทรศัพท์</h2><p class="muted" data-i18n="intro">เครื่องมือสอง เครื่องเสีย และอะไหล่จากทั่วประเทศไทย</p></div><button id="refresh" class="primary" type="button"><span class="refresh-icon" aria-hidden="true">↻</span> <span data-i18n="refresh">รีเฟรชข้อมูล</span></button></div>
     <section class="stats" aria-label="สรุปข้อมูล">
-      <div class="stat"><span>รายการทั้งหมด</span><strong id="total">—</strong><small>รายการในชุดข้อมูล</small></div>
-      <div class="stat"><span>รายการใหม่</span><strong id="new-total" class="accent">—</strong><small>รายการที่เพิ่งค้นพบ</small></div>
-      <div class="stat"><span>เว็บไซต์ที่ค้นหา</span><strong id="sources-total">—</strong><small>แหล่งข้อมูลตัวอย่าง</small></div>
-      <div class="stat update-stat"><span>เวลาที่อัปเดตล่าสุด</span><strong id="updated">—</strong><small>เวลาประเทศไทย (UTC+7)</small></div>
+      <div class="stat"><span data-i18n="total">รายการทั้งหมด</span><strong id="total">—</strong><small data-i18n="totalHint">รายการในชุดข้อมูล</small></div>
+      <div class="stat"><span data-i18n="newTotal">รายการใหม่</span><strong id="new-total" class="accent">—</strong><small data-i18n="newHint">รายการที่เพิ่งค้นพบ</small></div>
+      <div class="stat"><span data-i18n="sourcesTotal">เว็บไซต์ที่ค้นหา</span><strong id="sources-total">—</strong><small data-i18n="sourcesHint">แหล่งข้อมูล</small></div>
+      <div class="stat update-stat"><span data-i18n="updated">เวลาที่อัปเดตล่าสุด</span><strong id="updated">—</strong><small data-i18n="updatedHint">เวลาประเทศไทย (UTC+7)</small></div>
     </section>
-    <div id="demo-notice" class="notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>ข้อมูลตัวอย่าง</strong> รายการ ราคา และผู้ขายเป็นข้อมูลสมมติ ลิงก์ประกาศใช้เพื่อสาธิตเท่านั้น</p></div>
+    <div id="demo-notice" class="notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong data-i18n="demoTitle">ข้อมูลตัวอย่าง</strong> <span data-i18n="demoText">รายการ ราคา และผู้ขายเป็นข้อมูลสมมติ ลิงก์ประกาศใช้เพื่อสาธิตเท่านั้น</span></p></div>
     <div class="workspace">
       <aside class="filter-panel"><form id="filters">
-        <div class="panel-heading"><h3>ตัวกรอง</h3><button type="reset" class="text-button">ล้างทั้งหมด</button></div>
-        <label for="search">ค้นหา</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" name="search" type="search" placeholder="รุ่น หรืออาการเสีย…" autocomplete="off"></div>
-        <label for="brand">ยี่ห้อ</label><select id="brand" name="brand"><option value="">ทุกยี่ห้อ</option></select>
-        <label for="model">รุ่น</label><select id="model" name="model"><option value="">ทุกรุ่น</option></select>
-        <fieldset><legend>ราคา (บาท)</legend><div class="price-inputs"><input aria-label="ราคาต่ำสุด" name="min" type="number" min="0" step="1" placeholder="ต่ำสุด"><span>–</span><input aria-label="ราคาสูงสุด" name="max" type="number" min="0" step="1" placeholder="สูงสุด"></div></fieldset>
-        <label for="condition">สภาพเครื่อง</label><select id="condition" name="condition"><option value="">ทุกสภาพ</option></select>
-        <label for="source">เว็บไซต์ต้นทาง</label><select id="source" name="source"><option value="">ทุกเว็บไซต์</option></select>
-        <label for="location">จังหวัด / พื้นที่</label><select id="location" name="location"><option value="">ทุกพื้นที่</option></select>
-        <label class="checkbox-label"><input name="newOnly" type="checkbox"><span>เฉพาะรายการใหม่</span><span class="tiny-badge">ใหม่</span></label>
+        <div class="panel-heading"><h3 data-i18n="filters">ตัวกรอง</h3><button type="reset" class="text-button" data-i18n="clearAll">ล้างทั้งหมด</button></div>
+        <label for="search" data-i18n="search">ค้นหา</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" name="search" type="search" data-i18n-placeholder="searchPlaceholder" placeholder="รุ่น หรืออาการเสีย…" autocomplete="off"></div>
+        <label for="brand" data-i18n="brand">ยี่ห้อ</label><select id="brand" name="brand"><option value="">ทุกยี่ห้อ</option></select>
+        <label for="model" data-i18n="model">รุ่น</label><select id="model" name="model"><option value="">ทุกรุ่น</option></select>
+        <fieldset><legend data-i18n="price">ราคา (บาท)</legend><div class="price-inputs"><input data-i18n-aria-label="minPrice" data-i18n-placeholder="min" aria-label="ราคาต่ำสุด" name="min" type="number" min="0" step="1" placeholder="ต่ำสุด"><span>–</span><input data-i18n-aria-label="maxPrice" data-i18n-placeholder="max" aria-label="ราคาสูงสุด" name="max" type="number" min="0" step="1" placeholder="สูงสุด"></div></fieldset>
+        <label for="condition" data-i18n="condition">สภาพเครื่อง</label><select id="condition" name="condition"><option value="">ทุกสภาพ</option></select>
+        <label for="source" data-i18n="source">เว็บไซต์ต้นทาง</label><select id="source" name="source"><option value="">ทุกเว็บไซต์</option></select>
+        <label for="location" data-i18n="location">จังหวัด / พื้นที่</label><select id="location" name="location"><option value="">ทุกพื้นที่</option></select>
+        <label class="checkbox-label"><input name="newOnly" type="checkbox"><span data-i18n="newOnly">เฉพาะรายการใหม่</span><span class="tiny-badge" data-i18n="newBadge">ใหม่</span></label>
       </form></aside>
       <section id="results" class="results" aria-label="รายการโทรศัพท์" tabindex="-1">
-        <div class="results-toolbar"><div><h3>รายการโทรศัพท์ <span id="result-count">—</span></h3><p id="result-summary" class="muted" aria-live="polite">กำลังโหลดข้อมูล…</p></div><label class="sort-label" for="sort">เรียงตาม <select id="sort"><option value="newest">ใหม่ล่าสุด</option><option value="price-asc">ราคาต่ำสุด</option><option value="price-desc">ราคาสูงสุด</option></select></label></div>
+        <div class="results-toolbar"><div><h3><span data-i18n="results">รายการโทรศัพท์</span> <span id="result-count">—</span></h3><p id="result-summary" class="muted" aria-live="polite" data-i18n="loading">กำลังโหลดข้อมูล…</p></div><label class="sort-label" for="sort"><span data-i18n="sort">เรียงตาม</span> <select id="sort"><option value="newest" data-i18n="newest">ใหม่ล่าสุด</option><option value="price-asc" data-i18n="priceAsc">ราคาต่ำสุด</option><option value="price-desc" data-i18n="priceDesc">ราคาสูงสุด</option></select></label></div>
         <p id="status" role="status" class="status" hidden></p>
         <div id="cards" class="cards" aria-busy="true"></div>
-        <div id="empty" class="empty" hidden><span aria-hidden="true">⌕</span><h3>ไม่พบรายการที่ตรงกัน</h3><p>ลองเปลี่ยนคำค้นหรือขยายช่วงราคา</p><button id="clear-empty" type="button">ล้างตัวกรอง</button></div>
-        <p class="results-footnote">เวลาแสดงตามเขตเวลาประเทศไทย · ราคาที่แสดงเป็นราคาประกาศ</p>
+        <div id="empty" class="empty" hidden><span aria-hidden="true">⌕</span><h3 data-i18n="emptyTitle">ไม่พบรายการที่ตรงกัน</h3><p data-i18n="emptyText">ลองเปลี่ยนคำค้นหรือขยายช่วงราคา</p><button id="clear-empty" type="button" data-i18n="clearFilters">ล้างตัวกรอง</button></div>
+        <p class="results-footnote" data-i18n="footnote">เวลาแสดงตามเขตเวลาประเทศไทย · ราคาที่แสดงเป็นราคาประกาศ</p>
       </section>
     </div>
   </main>
-  <footer><span>Alex &amp; Vitida Broken Phone Finder</span><span>ข้อมูลตัวอย่าง · กันยายน 2026</span></footer>
-  <dialog id="detail" aria-labelledby="detail-title"><div class="dialog-header"><span>รายละเอียดโทรศัพท์</span><button id="close-detail" type="button" aria-label="ปิดรายละเอียด">×</button></div><div id="detail-content"></div></dialog>
-  <noscript><p>โปรดเปิดใช้งาน JavaScript เพื่อดูรายการและใช้ตัวกรอง</p></noscript>
+  <footer><span>Alex &amp; Vitida Broken Phone Finder</span><span data-i18n="footer">ข้อมูล · กันยายน 2026</span></footer>
+  <dialog id="detail" aria-labelledby="detail-title"><div class="dialog-header"><span data-i18n="detailHeading">รายละเอียดโทรศัพท์</span><button id="close-detail" type="button" data-i18n-aria-label="closeDetail" aria-label="ปิดรายละเอียด">×</button></div><div id="detail-content"></div></dialog>
+  <noscript><p data-i18n="noScript">โปรดเปิดใช้งาน JavaScript เพื่อดูรายการและใช้ตัวกรอง</p></noscript>
 </body>
 </html>

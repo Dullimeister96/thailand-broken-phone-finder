@@ -19,7 +19,7 @@ export function validateDataset(data) {
     for (const key of ['title','brand','model','description','location','source','condition','status']) {
       if (typeof item[key] !== 'string' || !item[key].trim()) throw new Error(`Invalid ${key}`);
     }
-    if (!BRANDS.includes(item.brand) || !Object.hasOwn(CONDITIONS,item.condition) || !['active','sold','removed'].includes(item.status) || typeof item.isNew !== 'boolean' || item.currency !== 'THB' || !Number.isFinite(item.price) || item.price < 0 || !Number.isFinite(Date.parse(item.discoveredAt)) || !Number.isFinite(Date.parse(item.lastCheckedAt))) throw new Error('Invalid listing');
+    if (!BRANDS.includes(item.brand) || !Object.hasOwn(CONDITIONS,item.condition) || !['active','sold','removed'].includes(item.status) || typeof item.isNew !== 'boolean' || item.currency !== 'THB' || (item.price !== null && (!Number.isFinite(item.price) || item.price < 0)) || !Number.isFinite(Date.parse(item.discoveredAt)) || !Number.isFinite(Date.parse(item.lastCheckedAt))) throw new Error('Invalid listing');
   }
   return data;
 }
@@ -37,8 +37,8 @@ export function filterListings(listings, filters, sort) {
   return listings.filter(item => item.status === 'active'
     && (!search || [item.title,item.brand,item.model,item.description,item.defect,item.location,item.source,CONDITIONS[item.condition]].join(' ').toLocaleLowerCase().includes(search))
     && ['brand','model','condition','source','location'].every(key => !filters[key] || item[key] === filters[key])
-    && (filters.min === '' || item.price >= Number(filters.min))
-    && (filters.max === '' || item.price <= Number(filters.max))
+    && (filters.min === '' || (item.price !== null && item.price >= Number(filters.min)))
+    && (filters.max === '' || (item.price !== null && item.price <= Number(filters.max)))
     && (!filters.newOnly || item.isNew))
-    .sort((a,b) => (sort === 'price-asc' ? a.price-b.price : sort === 'price-desc' ? b.price-a.price : Date.parse(b.discoveredAt)-Date.parse(a.discoveredAt)) || a.id.localeCompare(b.id));
+    .sort((a,b) => (sort === 'price-asc' ? (a.price === null)-(b.price === null) || a.price-b.price : sort === 'price-desc' ? (a.price === null)-(b.price === null) || b.price-a.price : Date.parse(b.discoveredAt)-Date.parse(a.discoveredAt)) || a.id.localeCompare(b.id));
 }
