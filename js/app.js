@@ -134,6 +134,6 @@ function applyLanguage() {
   if(statusKey) $('#status').textContent=t(statusKey);
   if(dataset){$('#updated').textContent=date(dataset.updatedAt,true);populateOptions();render();}
 }
-$('#language').addEventListener('change',event=>{language=event.target.value;localStorage.setItem('phone-finder-language',language);if(dialog.open)dialog.close();applyLanguage();});
+$('#language').addEventListener('change',event=>{language=event.target.value;try{localStorage.setItem('phone-finder-language',language);}catch{}if(dialog.open)dialog.close();applyLanguage();});
 applyLanguage();
 refresh();
