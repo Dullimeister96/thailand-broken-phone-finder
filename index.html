@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <meta name="description" content="แดชบอร์ดค้นหาโทรศัพท์มือสองและเครื่องเสียในประเทศไทย — รุ่นทดลองพร้อมข้อมูลตัวอย่าง">
+  <title>Thailand Broken Phone Finder</title>
+  <link rel="icon" href="./assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="./css/style.css">
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#results">ข้ามไปยังรายการ</a>
+  <header class="topbar"><div class="brandmark" aria-hidden="true">TF<span>↗</span></div><div class="identity"><h1>Thailand Broken Phone Finder</h1><p>ค้นหาเครื่องที่ใช่ เพื่อโอกาสครั้งใหม่</p></div><span class="demo-label">เวอร์ชันทดลอง</span></header>
+  <main>
+    <div class="page-heading"><div><p class="eyebrow">ภาพรวมตลาดโทรศัพท์</p><h2>ค้นหาโทรศัพท์</h2><p class="muted">เครื่องมือสอง เครื่องเสีย และอะไหล่จากทั่วประเทศไทย</p></div><button id="refresh" class="primary" type="button"><span aria-hidden="true">↻</span> รีเฟรชข้อมูล</button></div>
+    <section class="stats" aria-label="สรุปข้อมูล">
+      <div class="stat"><span>รายการทั้งหมด</span><strong id="total">—</strong><small>รายการในชุดข้อมูล</small></div>
+      <div class="stat"><span>รายการใหม่</span><strong id="new-total" class="accent">—</strong><small>รายการที่เพิ่งค้นพบ</small></div>
+      <div class="stat"><span>เว็บไซต์ที่ค้นหา</span><strong id="sources-total">—</strong><small>แหล่งข้อมูลตัวอย่าง</small></div>
+      <div class="stat update-stat"><span>เวลาที่อัปเดตล่าสุด</span><strong id="updated">—</strong><small>เวลาประเทศไทย (UTC+7)</small></div>
+    </section>
+    <div id="demo-notice" class="notice"><span class="notice-icon" aria-hidden="true">i</span><p><strong>ข้อมูลตัวอย่าง</strong> รายการ ราคา และผู้ขายเป็นข้อมูลสมมติ ลิงก์ประกาศใช้เพื่อสาธิตเท่านั้น ยังไม่มีการค้นหาหรืออัปเดตอัตโนมัติ</p></div>
+    <div class="workspace">
+      <aside class="filter-panel"><form id="filters">
+        <div class="panel-heading"><h3>ตัวกรอง</h3><button type="reset" class="text-button">ล้างทั้งหมด</button></div>
+        <label for="search">ค้นหา</label><div class="search-wrap"><span aria-hidden="true">⌕</span><input id="search" name="search" type="search" placeholder="รุ่น หรืออาการเสีย…" autocomplete="off"></div>
+        <label for="brand">ยี่ห้อ</label><select id="brand" name="brand"><option value="">ทุกยี่ห้อ</option></select>
+        <label for="model">รุ่น</label><select id="model" name="model"><option value="">ทุกรุ่น</option></select>
+        <fieldset><legend>ราคา (บาท)</legend><div class="price-inputs"><input aria-label="ราคาต่ำสุด" name="min" type="number" min="0" step="1" placeholder="ต่ำสุด"><span>–</span><input aria-label="ราคาสูงสุด" name="max" type="number" min="0" step="1" placeholder="สูงสุด"></div></fieldset>
+        <label for="condition">สภาพเครื่อง</label><select id="condition" name="condition"><option value="">ทุกสภาพ</option></select>
+        <label for="source">เว็บไซต์ต้นทาง</label><select id="source" name="source"><option value="">ทุกเว็บไซต์</option></select>
+        <label for="location">จังหวัด / พื้นที่</label><select id="location" name="location"><option value="">ทุกพื้นที่</option></select>
+        <label class="checkbox-label"><input name="newOnly" type="checkbox"><span>เฉพาะรายการใหม่</span><span class="tiny-badge">ใหม่</span></label>
+      </form></aside>
+      <section id="results" class="results" aria-label="รายการโทรศัพท์" tabindex="-1">
+        <div class="results-toolbar"><div><h3>รายการโทรศัพท์ <span id="result-count">—</span></h3><p id="result-summary" class="muted" aria-live="polite">กำลังโหลดข้อมูล…</p></div><label class="sort-label" for="sort">เรียงตาม <select id="sort"><option value="newest">ใหม่ล่าสุด</option><option value="price-asc">ราคาต่ำสุด</option><option value="price-desc">ราคาสูงสุด</option></select></label></div>
+        <p id="status" role="status" class="status" hidden></p>
+        <div id="cards" class="cards" aria-busy="true"></div>
+        <div id="empty" class="empty" hidden><span aria-hidden="true">⌕</span><h3>ไม่พบรายการที่ตรงกัน</h3><p>ลองเปลี่ยนคำค้นหรือขยายช่วงราคา</p><button id="clear-empty" type="button">ล้างตัวกรอง</button></div>
+        <p class="results-footnote">เวลาแสดงตามเขตเวลาประเทศไทย · ราคาที่แสดงเป็นราคาประกาศ</p>
+      </section>
+    </div>
+  </main>
+  <footer><span>Thailand Broken Phone Finder</span><span>ข้อมูลตัวอย่าง · กันยายน 2026</span></footer>
+  <dialog id="detail" aria-labelledby="detail-title"><div class="dialog-header"><span>รายละเอียดโทรศัพท์</span><button id="close-detail" type="button" aria-label="ปิดรายละเอียด">×</button></div><div id="detail-content"></div></dialog>
+  <noscript><p>โปรดเปิดใช้งาน JavaScript เพื่อดูรายการและใช้ตัวกรอง</p></noscript>
+</body>
+</html>
